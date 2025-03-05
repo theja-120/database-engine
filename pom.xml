@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.database-engine.java</groupId>
     <artifactId>Database-Engine</artifactId>
@@ -12,20 +12,21 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+        <!-- CSV handling -->
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.9</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <!-- String manipulation utilities -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.14.0</version>
         </dependency>
 
+        <!-- JUnit testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -33,6 +34,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- AssertJ for fluent assertions -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -40,13 +42,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ANTLR for SQL parsing -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>
-            <!-- DO NOT CHANGE THE VERSION OTHERWISE THE SQL PARSER WON'T WORK -->
             <version>4.9.2</version>
         </dependency>
 
+        <!-- JavaFX dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -76,6 +79,7 @@
 
     <build>
         <plugins>
+            <!-- JUnit Testing -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -85,14 +89,9 @@
                         <include>**/*Test.java</include>
                     </includes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
+            <!-- Checkstyle for code quality -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -105,7 +104,6 @@
                         </goals>
                     </execution>
                 </executions>
-
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
@@ -113,7 +111,21 @@
                 </configuration>
             </plugin>
 
-            <!-- Uncomment and adjust the mainClass as per your project structure -->
+            <!-- Jar Plugin to define the entry point -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>com.databaseengine.MainApp</Main-Class> <!-- Adjust this to your main class -->
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- JavaFX Maven Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -122,29 +134,6 @@
                     <mainClass>com.databaseengine.MainApp</mainClass> <!-- Adjust this line based on your actual main class -->
                 </configuration>
             </plugin>
-
-            <!-- Commented out the antlr4-maven-plugin for now -->
-            <!--
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.9.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <sourceDirectory>src/main/resources</sourceDirectory>
-                    <outputDirectory>src/main/java/</outputDirectory>
-                    <listener>true</listener>
-                    <visitor>true</visitor>
-                </configuration>
-            </plugin>
-            -->
         </plugins>
     </build>
-
 </project>
